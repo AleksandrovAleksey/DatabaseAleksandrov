@@ -29,8 +29,8 @@ class Tag(models.Model):
 
 class Question(models.Model):
     title = models.CharField(max_length=100, unique=True)
-    text = models.TextField(max_length=1000)
-    tags = models.ManyToManyField(Tag, related_name='questions', blank=True)
+    text = models.TextField(max_length=100)
+    tags = models.ManyToManyField(Tag, related_name='questions')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -42,9 +42,9 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    text = models.TextField(max_length=1000)
+    text = models.TextField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -71,4 +71,4 @@ class AnswerLike(models.Model):
         unique_together = ('answer', 'user')
 
     def __str__(self):
-        return f'{self.user.username} likes answer to {self.answer.for_question}'
+        return f'{self.user.username} likes answer to {self.answer.question}'

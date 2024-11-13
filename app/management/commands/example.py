@@ -15,9 +15,13 @@ class Command(BaseCommand):
         ratio = options['ratio']
         fake = Faker()
 
+        tags = set()
         for i in range(ratio):
-            tags = [Tag(tag=fake.word())]
-        Tag.objects.bulk_create(tags)
+            tag_name = fake.word()
+            tags.add(tag_name)
+
+        for tag_name in tags:
+            Tag.objects.get_or_create(tag=tag_name)
 
         usernames = set()
         users = []
@@ -40,24 +44,27 @@ class Command(BaseCommand):
                 user=random.choice(saved_users),
                 title=fake.sentence(),
                 text=fake.text(),
-                # tags=random.choice(tags),
             )
             questions.append(question)
 
         Question.objects.bulk_create(questions)
 
+        saved_questions = Question.objects.all()
+        saved_tags = Tag.objects.all()
+
         # answers = []
         # for i in range(ratio * 100):
         #     answer = Answer(
-        #         user=random.choice(saved_users),
-        #         text=fake.text()
+        #         question = random.choice(saved_questions),
+        #         user = random.choice(saved_users),
+        #         text = fake.text()
         #     )
         #     answers.append(answer)
         #
         # Answer.objects.bulk_create(answers)
 
-        # for question in questions:
+        # for question in saved_questions:
         #     num_tags_to_select = random.randint(1, 5)
-        #     num_tags_to_select = min(num_tags_to_select, len(tags))
-        #     selected_tags = random.sample(tags, num_tags_to_select)
+        #     num_tags_to_select = min(num_tags_to_select, len(saved_tags))
+        #     selected_tags = random.sample(list(saved_tags), num_tags_to_select)
         #     question.tags.set(selected_tags)
