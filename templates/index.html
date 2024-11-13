@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>text</th>
+            <th>tags</th>
+            <th>user</th>
+            <th>created_at</th>
+            <th>updated_at</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for question in questions %}
+        <tr>
+            <td>{{ question.id }}</td>
+            <td>{{ question.title }}</td>
+            <td>{{ question.text }}</td>
+            <td>{{ question.tags }}</td>
+            <td>{{ question.user }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
