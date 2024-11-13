@@ -52,19 +52,19 @@ class Command(BaseCommand):
         saved_questions = Question.objects.all()
         saved_tags = Tag.objects.all()
 
-        # answers = []
-        # for i in range(ratio * 100):
-        #     answer = Answer(
-        #         question = random.choice(saved_questions),
-        #         user = random.choice(saved_users),
-        #         text = fake.text()
-        #     )
-        #     answers.append(answer)
-        #
-        # Answer.objects.bulk_create(answers)
+        answers = []
+        for i in range(ratio * 100):
+            answer = Answer(
+                question = random.choice(saved_questions),
+                user = random.choice(saved_users),
+                text = fake.text()
+            )
+            answers.append(answer)
 
-        # for question in saved_questions:
-        #     num_tags_to_select = random.randint(1, 5)
-        #     num_tags_to_select = min(num_tags_to_select, len(saved_tags))
-        #     selected_tags = random.sample(list(saved_tags), num_tags_to_select)
-        #     question.tags.set(selected_tags)
+        Answer.objects.bulk_create(answers)
+
+        for question in saved_questions:
+            num_tags_to_select = random.randint(1, 5)
+            num_tags_to_select = min(num_tags_to_select, len(saved_tags))
+            selected_tags = random.sample(list(saved_tags), num_tags_to_select)
+            question.tags.set(selected_tags)
